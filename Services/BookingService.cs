@@ -49,7 +49,7 @@ namespace Web.Data
                 throw new ClosedOnSundaysException();
             }
 
-            booking.Table = BookingService.GetTable(newBooking);
+            booking.Table = GetTable(newBooking);
 
 
             if (booking.Table == null)
@@ -57,8 +57,8 @@ namespace Web.Data
                 throw new NoTableException();
 
             }
-            Context.Bookings.Add(booking);
-            Context.SaveChanges();
+            context.Add(booking);
+            context.SaveChanges();
         }
 
         public void PopulateTables()
