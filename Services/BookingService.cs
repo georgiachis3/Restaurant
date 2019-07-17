@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,109 +20,120 @@ namespace Web.Data
             {
                 BookingLengthDictionary.Add(i, TimeSpan.FromMinutes(i * 30));
             }
+        }
 
         public void PopulateTables()
         {
             //Context.Tables.Add();
 
-            Context.Tables.Add(new Table()
+            context.Tables.Add(new Table()
             {
                 Chairs = 2,
                 Location = Location.Inside
 
             });
 
-            Context.Tables.Add(new Table()
+            context.Tables.Add(new Table()
             {
                 Chairs = 2,
                 Location = Location.Inside
 
             });
 
-            Context.Tables.Add(new Table()
+            context.Tables.Add(new Table()
             {
                 Chairs = 2,
                 Location = Location.Roof
 
             });
 
-            Context.Tables.Add(new Table()
+            context.Tables.Add(new Table()
             {
                 Chairs = 4,
                 Location = Location.Inside
 
             });
 
-            Context.Tables.Add(new Table()
+            context.Tables.Add(new Table()
             {
                 Chairs = 4,
                 Location = Location.Inside
 
             });
 
-            Context.Tables.Add(new Table()
+            context.Tables.Add(new Table()
             {
                 Chairs = 4,
                 Location = Location.Outside
 
             });
 
-            Context.Tables.Add(new Table()
+            context.Tables.Add(new Table()
             {
                 Chairs = 6,
                 Location = Location.Inside
 
             });
 
-            Context.Tables.Add(new Table()
+            context.Tables.Add(new Table()
             {
                 Chairs = 6,
                 Location = Location.Inside
 
             });
 
-            Context.Tables.Add(new Table()
+            context.Tables.Add(new Table()
             {
                 Chairs = 6,
                 Location = Location.Outside
 
             });
 
-            Context.SaveChanges();
+            context.SaveChanges();
 
 
-                Table GetTable(Booking newBooking)
+        Table GetTable(Booking newBooking)
+        {
+            var bookingLength = BookingLengthDictionary[newBooking.Guests];
+
+            var endNewBookingTime = newBooking.Time + bookingLength;
+
+            foreach (var table in context.Tables.Where(x => x.Location == newBooking.RequestedLocation && x.Chairs >= newBooking.Guests))
             {
-                var bookingLength = BookingLengthDictionary[newBooking.Guests];
-
-                var endNewBookingTime = newBooking.Time + bookingLength;
-
-                foreach (var table in Context.Tables.Where(x => x.Location == newBooking.RequestedLocation && x.Chairs >= newBooking.Guests))
+                var conflictsWithExistingBooking = false;
+                foreach (var existingBooking in context.Bookings.Where(x => x.Table == table))
                 {
-                    var conflictsWithExistingBooking = false;
-                    foreach (var existingBooking in Context.Bookings.Where(x => x.Table == table))
-                    {
-                        var existingBookingLength = BookingLengthDictionary[existingBooking.Guests];
+                    var existingBookingLength = BookingLengthDictionary[existingBooking.Guests];
 
-                        var existingBookingEndTime = existingBooking.Time + existingBookingLength;
-                        //a.start < b.end && b.start < a.end;
+                    var existingBookingEndTime = existingBooking.Time + existingBookingLength;
+                    //a.start < b.end && b.start < a.end;
 
-                        var conflicts = newBooking.Time < existingBookingEndTime && existingBooking.Time < endNewBookingTime;
-                        if (conflicts)
-                        {
-                            // Conflicts
-                            conflictsWithExistingBooking = true;
-                            break;
-                        }
-                    }
-                    if (!conflictsWithExistingBooking)
+                    var conflicts = newBooking.Time < existingBookingEndTime && existingBooking.Time < endNewBookingTime;
+                    if (conflicts)
                     {
-                        return table;
+                        // Conflicts
+                        conflictsWithExistingBooking = true;
+                        break;
                     }
                 }
-                return null;
+                if (!conflictsWithExistingBooking)
+                {
+                    return table;
+                }
             }
+            return null;
         }
+        }
+
+        internal bool CheckingForTable()
+        {
+            if (context.Tables.Any())
+            {
+                return true;
+            }
+            return false;    
+        }
+       
     }
 }
  
