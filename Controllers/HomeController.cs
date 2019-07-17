@@ -81,7 +81,7 @@ namespace Web.Controllers
         }
         public IActionResult ListofHolidays()
         {
-            return View(bookingService.GetAll());
+            return View(holidayService.GetAll());
         }
         public IActionResult ListofTables()
         {
@@ -124,11 +124,13 @@ namespace Web.Controllers
 
             booking.Time = date + time.TimeOfDay;
 
-            if (DateTime.Now > booking.Time)
-                ModelState.AddModelError(string.Empty, "This date is in the past.");
-
             try
             {
+                if (DateTime.Now > booking.Time)
+                {
+                    throw new DateInPastException();
+                }
+
                 var conflictsWithHolidays = holidayService.IsConflict(booking);
                 if (conflictsWithHolidays)
                 {
@@ -137,6 +139,7 @@ namespace Web.Controllers
                 bookingService.Add(booking);
                 return View("Confirmation", booking);
             }
+
             catch (RestrauntClosedException)
             {
                 ModelState.AddModelError(string.Empty, "The restaurant is closed with the times you have entered.");
@@ -153,10 +156,12 @@ namespace Web.Controllers
             {
                 ModelState.AddModelError(string.Empty, "There are no tables available at this time/date");
             }
+            catch (DateInPastException)
+            {
+                ModelState.AddModelError(string.Empty, "This date is in the past.");
+            }
             return View(booking);
-        }
-
-        
+            }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
