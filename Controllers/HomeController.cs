@@ -140,7 +140,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
 
-                booking.Table = GetTable(booking);
+                booking.Table = BookingService.GetTable(booking);
 
 
                 if (booking.Table == null)
@@ -234,7 +234,7 @@ namespace Web.Controllers
 
 
         }
-        Table GetTable(Booking newBooking)
+  /*      Table GetTable(Booking newBooking)
         {
             var bookingLength = BookingLengthDictionary[newBooking.Guests];
 
@@ -266,7 +266,7 @@ namespace Web.Controllers
             return null;
         }
     }
-}
+} */
 
 
 
