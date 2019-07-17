@@ -66,77 +66,6 @@ namespace Web.Data
             context.SaveChanges();
         }
 
-        public void PopulateTables()
-        {
-            //Context.Tables.Add();
-
-            context.Tables.Add(new Table()
-            {
-                Chairs = 2,
-                Location = Location.Inside
-
-            });
-
-            context.Tables.Add(new Table()
-            {
-                Chairs = 2,
-                Location = Location.Inside
-
-            });
-
-            context.Tables.Add(new Table()
-            {
-                Chairs = 2,
-                Location = Location.Roof
-
-            });
-
-            context.Tables.Add(new Table()
-            {
-                Chairs = 4,
-                Location = Location.Inside
-
-            });
-
-            context.Tables.Add(new Table()
-            {
-                Chairs = 4,
-                Location = Location.Inside
-
-            });
-
-            context.Tables.Add(new Table()
-            {
-                Chairs = 4,
-                Location = Location.Outside
-
-            });
-
-            context.Tables.Add(new Table()
-            {
-                Chairs = 6,
-                Location = Location.Inside
-
-            });
-
-            context.Tables.Add(new Table()
-            {
-                Chairs = 6,
-                Location = Location.Inside
-
-            });
-
-            context.Tables.Add(new Table()
-            {
-                Chairs = 6,
-                Location = Location.Outside
-
-            });
-
-            context.SaveChanges();
-
-        }
-
         Table GetTable(Booking newBooking)
         {
             var bookingLength = BookingLengthDictionary[newBooking.Guests];
@@ -169,14 +98,7 @@ namespace Web.Data
             return null;
         }
 
-        internal bool CheckingForTable()
-        {
-            if (context.Tables.Any())
-            {
-                return true;
-            }
-            return false;    
-        }
+        
        
     }
 }

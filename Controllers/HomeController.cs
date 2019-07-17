@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Data;
 using Web.Models;
+using Web.Services;
 
 namespace Web.Controllers
 {
@@ -14,17 +15,19 @@ namespace Web.Controllers
     {
         BookingService bookingService;
         HolidayService holidayService;
+        TableService tableService;
 
         public HomeController(BookingContext context)
         {
             bookingService = new BookingService(context);
             holidayService = new HolidayService(context);
+            tableService = new TableService(context);
 
-            bool available = bookingService.CheckingForTable();
+            bool available = tableService.CheckingForTable();
 
             if (!available)
             {
-                bookingService.PopulateTables();
+                tableService.PopulateTables();
             }
 
         }
