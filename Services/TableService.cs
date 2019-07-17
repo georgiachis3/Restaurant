@@ -9,31 +9,31 @@ namespace Web.Services
 {
     public class GenericService<T> where T : Identifiable
     {
-        private BookingContext context;
+        protected BookingContext context;
 
         public GenericService(BookingContext context)
         {
             this.context = context;
         }
 
-        protected virtual void Add(T entity)
+        public virtual void Add(T entity)
         {
             context.Set<T>().Add(entity);
             context.SaveChanges();
         }
-        protected virtual IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return context.Set<T>().ToList();
         }
 
-        protected virtual T ViewTable(int Id)
+        public virtual T Get(int Id)
         {
             return context.Set<T>().SingleOrDefault(x => x.Id == Id);
         }
 
-        protected virtual void DeleteTable(int Id)
+        public virtual void Delete(int Id)
         {
-            var deletedTable = ViewTable(Id);
+            var deletedTable = Get(Id);
             context.Set<T>().Remove(deletedTable);
             context.SaveChanges();
         }
@@ -47,7 +47,7 @@ namespace Web.Services
         {
         }
 
-        protected override void Add(Table entity)
+        public override void Add(Table entity)
         {
             base.Add(entity);
         }

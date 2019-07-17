@@ -47,7 +47,7 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult ViewTable(int Id)
         {
-            var table = tableService.ViewTable(Id);
+            var table = tableService.Get(Id);
             if (table == null)
             {
                 return NotFound();
@@ -57,7 +57,7 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult DeleteTable(int Id)
         {
-            tableService.DeleteTable(Id);
+            tableService.Delete(Id);
             return RedirectToAction("ListofTables");
         }
 
@@ -70,7 +70,7 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult AddingTables(Table table)
         {
-            tableService.AddTables(table);
+            tableService.Add(table);
             return View(table);
         }
 
@@ -103,7 +103,7 @@ namespace Web.Controllers
         {
             try
             {
-                holidayService.CreateHoliday(holidays);
+                holidayService.Add(holidays);
                 return View(holidays);
             }
             catch (HolidayIsInPastException)
@@ -119,7 +119,7 @@ namespace Web.Controllers
             
         }
         [HttpPost]
-        public IActionResult Booking(Booking booking, DateTime date, DateTime time, Booking newBooking)
+        public IActionResult Booking(Booking booking, DateTime date, DateTime time)
         {
 
             booking.Time = date + time.TimeOfDay;
@@ -134,7 +134,7 @@ namespace Web.Controllers
                 {
                     throw new RestrauntClosedException();
                 }
-                bookingService.CreateBooking(booking, newBooking);
+                bookingService.Add(booking);
                 return View("Confirmation", booking);
             }
             catch (RestrauntClosedException)
