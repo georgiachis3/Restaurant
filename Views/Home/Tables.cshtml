@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Tables";
+}
+
+@model Tables
+
+<div class="text-center">
+    <h1>@ViewData["Title"]</h1>
+    <p>For managing tables.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6 order-md-2">
+        @Html.ValidationSummary()
+
+        <form method="POST" class="reservation">
+            <div class="col-12">
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="Chairs">Chairs</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(x => x.Chairs, null, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="Location">Location</label>
+                    </div>
+                    <div class="col-md-8">
+                        <select class="form-control" id="Location" asp-for="Location" asp-items="Html.GetEnumSelectList<Web.Models.Location>()"></select>
+                    </div>
+                </div>
+                <div class="col-md-8 offset-md-4 row-spacer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

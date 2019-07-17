@@ -50,6 +50,10 @@ namespace Web.Controllers
         {
             return View();
         }
+        public IActionResult Tables()
+        {
+            return View();
+        }
 
         [Authorize]
         public IActionResult Holidays()

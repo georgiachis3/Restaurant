@@ -50,32 +50,35 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-					<ul class="navbar-nav flex-grow-1 nav-fill w-100">
-						<li class="nav-item nav-desktop">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-						</li>
-						<li class="nav-item nav-desktop">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Booking">Bookings</a>
-						</li>
-						<li class="nav-item nav-desktop">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
-						</li>
-						<li class="nav-item nav-desktop">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FAQs">FAQs</a>
-						</li>
-						@if (SignInManager.IsSignedIn(User))
-						{
-							<li class="nav-item nav-desktop">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Admin">Admin</a>
-							</li>
-							<li class="nav-item nav-desktop">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Holidays">Holidays</a>
-							</li>
-							<li class="nav-item nav-desktop">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ListofHolidays">List of Holidays</a>
-							</li>
-						}
-					</ul>
+                    <ul class="navbar-nav flex-grow-1 nav-fill w-100">
+                        <li class="nav-item nav-desktop">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item nav-desktop">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Booking">Bookings</a>
+                        </li>
+                        <li class="nav-item nav-desktop">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
+                        </li>
+                        <li class="nav-item nav-desktop">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FAQs">FAQs</a>
+                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item nav-desktop">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Admin">Admin</a>
+                            </li>
+                            <li class="nav-item nav-desktop">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Holidays">Holidays</a>
+                            </li>
+                            <li class="nav-item nav-desktop">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ListofHolidays">List of Holidays</a>
+                            </li>
+                            <li class="nav-item nav-desktop">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Tables">Tables</a>
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
         </nav>
