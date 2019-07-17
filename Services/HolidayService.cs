@@ -1,13 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Web.Models;
 
-namespace Web.Services
+namespace Web.Data
 {
     public class HolidayService
     {
-        
+        public HolidayService()
+        {
+        }
+        public void CreateHoliday(Holidays Holidays)
+        {
+            if (DateTime.Now > Holidays.StartDate)
+            {
+                throw new HolidayIsInPastException();
+            }
+            if (Holidays.EndDate > Holidays.StartDate.AddMonths(1))
+            {
+                throw new GreaterThanMonthException();
+            }
+        }
+
     }
-}
+}          
