@@ -24,6 +24,10 @@ namespace Web.Models
             {
                 throw new GreaterThanMonthException();
             }
+            if (entity.EndDate < entity.StartDate)
+            {
+                throw new NotPossibleException();
+            }
             base.Add(entity);
         }
         public bool IsConflict(Booking booking)

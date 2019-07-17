@@ -160,6 +160,10 @@ namespace Web.Controllers
             {
                 ModelState.AddModelError(string.Empty, "This date is in the past.");
             }
+            catch (NotPossibleException)
+            {
+                ModelState.AddModelError(string.Empty, "Your holiday cannot end before it starts.");
+            }
             return View(booking);
             }
 
