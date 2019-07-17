@@ -1,0 +1,34 @@
+@model List<Table>;
+
+@{
+	ViewData["Title"] = "List of Tables";
+}
+<div class="text-center">
+	<h1>@ViewData["Title"]</h1>
+</div>
+
+<div class="col">
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Chairs</th>
+				<th>Location</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var Tables in Model)
+			{
+				<tr>
+					<td> @Tables.Id</td>
+					<td> @Tables.Chairs</td>
+					<td> @Tables.Location</td>
+				</tr>
+
+
+			}
+		</tbody>
+	</table>
+
+</div>
+

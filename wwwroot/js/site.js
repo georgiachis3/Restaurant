@@ -18,7 +18,7 @@ jQuery.validator.addMethod("future", function(value, element) {
             Guests: {
                 digits: true,
                 min: 1,
-                max: 6,
+                max: 12,
                 required: true
             },
             FirstName: {
@@ -63,7 +63,19 @@ jQuery.validator.addMethod("future", function(value, element) {
             Reason: "Please enter a reason"
         }
     });
-
+    $(".tables").validate({
+        rules: {
+            Chairs: {
+                digits: true,
+                min: 1,
+                max: 12,
+                required: true
+            },
+            messages: {
+                Chairs: "Please enter a number of chairs between 1 and 12",
+            }
+        }
+    })
 $('#date').on('change', function () { $(this).valid(); });
 
 function ul(index) {

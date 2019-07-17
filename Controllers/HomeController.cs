@@ -23,13 +23,6 @@ namespace Web.Controllers
             holidayService = new HolidayService(context);
             tableService = new TableService(context);
 
-            bool available = tableService.CheckingForTable();
-
-            if (!available)
-            {
-                tableService.PopulateTables();
-            }
-
         }
         [HttpGet]
 
@@ -52,13 +45,20 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult ViewTable(int id)
+        {
+            //var table = service.GetTable(id);
+            return View(table);
+        }
+
+        [HttpGet]
         public IActionResult AddingTables()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Tables(Table table)
+        public IActionResult AddingTables(Table table)
         {
             tableService.AddTables(table);
             return View(table);
@@ -73,9 +73,12 @@ namespace Web.Controllers
         {
             return View(bookingService.GetAll());
         }
+        public IActionResult ListofTables()
+        {
+            return View(tableService.GetAll());
+        }
         public IActionResult FAQs()
         {
-
             return View();
         }
         [Authorize]

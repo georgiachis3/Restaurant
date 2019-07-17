@@ -16,7 +16,7 @@ namespace Web.Data
         public BookingService(BookingContext context)
         {
             this.context = context;
-            for (int i = 1; i <= 6; i++)
+            for (int i = 1; i <= 12; i++)
             {
                 BookingLengthDictionary.Add(i, TimeSpan.FromMinutes(i * 30));
             }
