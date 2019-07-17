@@ -12,6 +12,7 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
+        BookingService bookingService;
         /*public BookingContext Context { get; set; }
 
         public Dictionary<int, TimeSpan> BookingLengthDictionary = new Dictionary<int, TimeSpan>();*/
@@ -20,6 +21,8 @@ namespace Web.Controllers
 
         public HomeController(BookingContext context)
         {
+            bookingService = new BookingService();
+            bookingService.
             /*Context = context;
 
             for (int i = 1; i <= 6 ; i++)
@@ -28,7 +31,7 @@ namespace Web.Controllers
             }
             */
 
-            bool available = Context.Tables.Any();
+            bool available = BookingService.Tables.Any();
 
             if (!available)
             {
@@ -163,77 +166,7 @@ namespace Web.Controllers
             
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public void PopulateTables()
-        {
-            //Context.Tables.Add();
-
-            Context.Tables.Add(new Table()
-            {
-                Chairs = 2,
-                Location = Location.Inside
-
-            });
-
-            Context.Tables.Add(new Table()
-            {
-                Chairs = 2,
-                Location = Location.Inside
-
-            });
-
-            Context.Tables.Add(new Table()
-            {
-                Chairs = 2,
-                Location = Location.Roof
-
-            });
-
-            Context.Tables.Add(new Table()
-            {
-                Chairs = 4,
-                Location = Location.Inside
-
-            });
-
-            Context.Tables.Add(new Table()
-            {
-                Chairs = 4,
-                Location = Location.Inside
-
-            });
-
-            Context.Tables.Add(new Table()
-            {
-                Chairs = 4,
-                Location = Location.Outside
-
-            });
-
-            Context.Tables.Add(new Table()
-            {
-                Chairs = 6,
-                Location = Location.Inside
-
-            });
-
-            Context.Tables.Add(new Table()
-            {
-                Chairs = 6,
-                Location = Location.Inside
-
-            });
-
-            Context.Tables.Add(new Table()
-            {
-                Chairs = 6,
-                Location = Location.Outside
-
-            });
-
-            Context.SaveChanges();
-
-
-        }
+        
   /*      Table GetTable(Booking newBooking)
         {
             var bookingLength = BookingLengthDictionary[newBooking.Guests];

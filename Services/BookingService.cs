@@ -9,22 +9,88 @@ namespace Web.Data
 {
     public class BookingService
     {
-        public BookingContext Context { get; set; }
-
-        public Dictionary<int, TimeSpan> BookingLengthDictionary = new Dictionary<int, TimeSpan>();
+        private BookingContext context;
+        private Dictionary<int, TimeSpan> BookingLengthDictionary = new Dictionary<int, TimeSpan>();
 
         public void CreateBooking(BookingContext context)
         {
-            Context = context;
 
             for (int i = 1; i <= 6; i++)
             {
                 BookingLengthDictionary.Add(i, TimeSpan.FromMinutes(i * 30));
             }
 
+        public void PopulateTables()
+        {
+            //Context.Tables.Add();
+
+            Context.Tables.Add(new Table()
+            {
+                Chairs = 2,
+                Location = Location.Inside
+
+            });
+
+            Context.Tables.Add(new Table()
+            {
+                Chairs = 2,
+                Location = Location.Inside
+
+            });
+
+            Context.Tables.Add(new Table()
+            {
+                Chairs = 2,
+                Location = Location.Roof
+
+            });
+
+            Context.Tables.Add(new Table()
+            {
+                Chairs = 4,
+                Location = Location.Inside
+
+            });
+
+            Context.Tables.Add(new Table()
+            {
+                Chairs = 4,
+                Location = Location.Inside
+
+            });
+
+            Context.Tables.Add(new Table()
+            {
+                Chairs = 4,
+                Location = Location.Outside
+
+            });
+
+            Context.Tables.Add(new Table()
+            {
+                Chairs = 6,
+                Location = Location.Inside
+
+            });
+
+            Context.Tables.Add(new Table()
+            {
+                Chairs = 6,
+                Location = Location.Inside
+
+            });
+
+            Context.Tables.Add(new Table()
+            {
+                Chairs = 6,
+                Location = Location.Outside
+
+            });
+
+            Context.SaveChanges();
 
 
-           Table GetTable(Booking newBooking)
+                Table GetTable(Booking newBooking)
             {
                 var bookingLength = BookingLengthDictionary[newBooking.Guests];
 
