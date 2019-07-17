@@ -1,0 +1,138 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+	white-space: normal;
+	text-align: right;
+	word-break: break-all;
+}
+.navbar .navbar-collapse {
+	text-align: center;
+}
+.nav-desktop {
+	font-size: 27px
+}
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+}
+.row-spacer {  
+  margin-bottom: 20px;
+}
+.errormessage {
+  border:1px solid red;
+  padding:20px;
+  margin-bottom: 20px;
+}
+table{
+  width:100%;
+}
+table th{
+  font-size: 20px;
+  border-bottom: 1px solid black;
+  padding:10px;
+}
+table td{
+  font-size: 15px;
+  border-bottom: 1px solid black;
+  padding:10px;
+}
+
+h1{
+    font-size: 40px;
+    font-style: italic;
+}
+/* Menu */
+.menu-wrapper{
+  position:relative;
+  margin-bottom:30px;
+  overflow:hidden;
+}
+.menu-wrapper .image-wrapper{
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 300px;
+}
+.menu-wrapper .copy-wrapper{
+  padding:20px;
+  background-color:rgba(255, 0, 0, 0.8);
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  transition:all 0.5s;
+}
+.menu-wrapper .copy-wrapper p{
+  font-size:20px;
+  color:white;
+  padding:0;
+  margin:0;
+}
+.logo {
+	max-width: 100px
+}
+
+
+
+/* media queries */
+@media (min-width: 768px) {
+	.logo {
+		max-width: 200px
+	}
+	.menu-wrapper .copy-wrapper {
+		bottom: -100px;
+	}
+	.menu-wrapper:hover .copy-wrapper{
+		bottom:0;
+	}
+}
+label.error {
+  color:red;
+}
+
+
+

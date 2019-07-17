@@ -1,0 +1,108 @@
+﻿@{
+    ViewData["Title"] = "Bookings";
+}
+
+@model Booking
+
+<div class="text-center">
+    <h1>@ViewData["Title"]</h1>
+    <p>Please complete this form to book a table at Georgia's Italian</p>
+</div>
+
+<div class ="row">
+    <div class="col-md-3 order-md-1">
+        <h2>We are open everyday from 10:00 to 22:00! Except for Sundays, we are closed all day.</h2>
+    </div>
+    <div class="col-md-3 order-md-3">
+        <h2>Please ring us at 07850_____ if you need help!</h2>
+    </div> 
+    <div class="col-md-6 order-md-2">
+        @Html.ValidationSummary()
+    
+		<form method="POST" class="reservation">
+			<div class="col-12">
+				<div class="row row-spacer">
+					<div class="col-md-4">
+						<label for="Date">Date</label>
+					</div>
+					<div class="col-md-8">
+						<input type="Date" class="form-control" name="date" id="date" />
+					</div>
+				</div>
+
+				<div class="row row-spacer">
+					<div class="col-md-4">
+						<label for="Time">Time</label>
+					</div>
+					<div class="col-md-8">
+						<input class="form-control" type="time" name="time" />
+					</div>
+				</div>
+				<div class="row row-spacer">
+					<div class="col-md-4">
+						<label for="Guests">Guests</label>
+					</div>
+					<div class="col-md-8">
+						@Html.TextBoxFor(x => x.Guests, null, new { @class = "form-control" })
+					</div>
+				</div>
+
+				<div class="row row-spacer">
+					<div class="col-md-4">
+						<label for="Location">Location</label>
+					</div>
+					<div class="col-md-8">
+						<select class="form-control" id="Location" asp-for="RequestedLocation" asp-items="Html.GetEnumSelectList<Web.Models.Location>()"></select>
+					</div>
+				</div>
+
+				<div class="row row-spacer">
+					<div class="col-md-4">
+						<label for="FirstName">First Name</label>
+					</div>
+					<div class="col-md-8">
+						@Html.TextBoxFor(x => x.FirstName, null, new { @class = "form-control" })
+					</div>
+				</div>
+				<div class="row row-spacer">
+					<div class="col-md-4">
+						<label for="LastName">Last Name</label>
+					</div>
+					<div class="col-md-8">
+						@Html.TextBoxFor(x => x.LastName, null, new { @class = "form-control" })
+					</div>
+				</div>
+				<div class="row row-spacer">
+					<div class="col-md-4">
+						<label for="PhoneNumber">Phone Number</label>
+					</div>
+					<div class="col-md-8">
+						@Html.TextBoxFor(x => x.PhoneNumber, null, new { @class = "form-control" })
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 row-spacer">
+						<label for="EmailAddress">Email Address (mailing list)</label>
+					</div>
+					<div class="col-md-8 row-spacer">
+						@Html.TextBoxFor(x => x.EmailAddress, null, new { @class = "form-control" })
+					</div>
+				</div>
+				<div class="col-md-8 offset-md-4 row-spacer">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+		</form>
+    </div>   
+</div>
+<div class="row text-center">
+    <div class="col-md-6">
+        <img src="/images/people eating pizza.jpg" alt="Share a pizza with your friends." class="img-fluid" />
+        <p>Share a pizza with your friends or family!</p>
+    </div>
+    <div class="col-md-6">
+        <img src="/images/person alone.jpg" alt="Eating pasta" class="img-fluid" />
+        <p>Or come enjoy the food alone!</p>
+    </div>
+</div>
+

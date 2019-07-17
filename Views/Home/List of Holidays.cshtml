@@ -1,0 +1,26 @@
+@model List<Holidays>;
+
+@{
+    ViewData["Title"] = "All Holidays";
+}
+
+<div class="col">
+    <table>
+        <thead> 
+            <tr>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Reason</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var Holidays in Model){
+        <tr>
+            <td> @Holidays.StartDate</td>
+            <td> @Holidays.EndDate</td>
+            <td> @Holidays.Reason</td>
+        </tr>
+    }
+    </tbody>
+    </table>
+</div>

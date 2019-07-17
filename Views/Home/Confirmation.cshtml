@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model Booking;
+
+<div class="text-center">
+    <h1 class="display-4">Thank you for booking a table</h1>
+    <p> Time and Date: @Model.Time </p>
+    <p> Table Location: @Model.Table.Location </p>
+    <p> Number of Guests: @Model.Guests </p>
+    <p> First Name: @Model.FirstName </p>
+    <p> Last Name: @Model.LastName </p>
+    <p> Contact Number: @Model.PhoneNumber
+</div>
+
+
+
+    

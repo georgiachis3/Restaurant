@@ -1,0 +1,74 @@
+@{
+	ViewData["Title"] = "FAQs";
+}
+
+@model Booking
+
+<div class="text-center">
+	<h1>Frequently Asked Questions</h1>
+</div>
+<div class="row">
+	<div class="col">
+		<h4>Is there a dress code at the restaurant?</h4>
+		<p>No, the restaurant is relaxed and informal.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<h4>Is there a children's menu?</h4>
+		<p>No, there is not. However, all of our starters, mains and desserts can be made in a child-size portion.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<h4>Do you really only have 9 tables?</h4>
+		<p>Yes. Our restaurant is small.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<h4>What happens if I need to cancel or change a booking?</h4>
+		<p>Please contact us using the phone number on our Bookings page.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<h4>Do you have WiFi?</h4>
+		<p>No.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<h4>Do you really only have 6 items of food for each starter, main, dessert and drink?</h4>
+		<p>Yes. We pride ourselves on serving a small number of excellent quality dishes, rather than a large number of low quality dishes.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<h4>What is the largest table size you can accommodate?</h4>
+		<p>6</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<h4>Do you cater for dietary requirements?</h4>
+		<p>Yes. Please talk to your waiter upon arrival.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<h4>Where is your restaurant located?</h4>
+		<p>...</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4 row-spacer">
+		<label for="FAQs">Ask a question</label>
+	</div>
+	<div class="col-md-8 row-spacer">
+		@Html.TextBoxFor(x => x.FAQs, null, new { @class = "form-control" })
+	</div>
+</div>
+<div class="col-md-8 offset-md-4 row-spacer">
+	<button type="submit" class="btn btn-primary">Submit</button>
+</div>
