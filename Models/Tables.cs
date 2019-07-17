@@ -6,11 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Web.Models
 {
     [Table("Table")]
-    public class Table
+    public class Table : Identifiable
     {
-        [Key]
-    public int Id
-        { get; set; }
     public int Chairs
     // number of chairs, time spent in restaurant
         { get; set; }
@@ -18,5 +15,11 @@ namespace Web.Models
     // outside or inside
         { get; set; }
     public ICollection<Booking> Bookings { get; set; }
+    }
+
+    public abstract class Identifiable
+    {
+        [Key]
+        public int Id { get; set; }
     }
 }

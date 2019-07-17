@@ -55,10 +55,10 @@ namespace Web.Controllers
             return View(table);
         }
         [HttpPost]
-        public IActionResult DeleteTable (int Id)
+        public IActionResult DeleteTable(int Id)
         {
-            
-
+            tableService.DeleteTable(Id);
+            return RedirectToAction("ListofTables");
         }
 
         [HttpGet]

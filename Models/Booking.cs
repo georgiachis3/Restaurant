@@ -5,13 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Web.Models
 {
     [Table("Booking")]
-    public class Booking
-    
-    {
-        
-        [Key]
-        public int Id { get; set; }
+    public class Booking : Identifiable
 
+    {
         [Display(Name = "First Name")]
         [Required]
         [MinLength(1)]

@@ -5,10 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Web.Models
 {
     [Table("Holidays")]
-    public class Holidays
+    public class Holidays : Identifiable
     {
-         [Key]
-        public int Id { get; set; }
 
         [Display(Name = "Start Date")]
         [Required]

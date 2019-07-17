@@ -10,20 +10,22 @@
 <div class="col">
 	<table>
 		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Chairs</th>
-				<th>Location</th>
-			</tr>
+            <tr>
+                <th>ID</th>
+                <th>Chairs</th>
+                <th>Location</th>
+                <th>Details</th>
+            </tr>
 		</thead>
 		<tbody>
 			@foreach (var Tables in Model)
 			{
-				<tr>
-					<td> @Tables.Id</td>
-					<td> @Tables.Chairs</td>
-					<td> @Tables.Location</td>
-				</tr>
+            <tr>
+                <td> @Tables.Id</td>
+                <td> @Tables.Chairs</td>
+                <td> @Tables.Location</td>
+                <td>@Html.ActionLink("Details", "ViewTable", "Home", new { id = Tables.Id })</td>
+            </tr>
 
 
 			}

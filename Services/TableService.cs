@@ -7,28 +7,49 @@ using Web.Models;
 
 namespace Web.Services
 {
-    public class TableService
+    public class GenericService<T> where T : Identifiable
     {
         private BookingContext context;
 
-        public TableService(BookingContext context)
+        public GenericService(BookingContext context)
         {
             this.context = context;
         }
 
-        public void AddTables(Table table)
+        protected virtual void Add(T entity)
         {
-            context.Tables.Add(table);
+            context.Set<T>().Add(entity);
             context.SaveChanges();
         }
-        public IEnumerable<Table> GetAll()
+        protected virtual IEnumerable<T> GetAll()
         {
-            return context.Tables.ToList();
+            return context.Set<T>().ToList();
         }
 
-        public Table ViewTable(int Id)
+        protected virtual T ViewTable(int Id)
         {
-            return context.Tables.SingleOrDefault(x => x.Id == Id);
+            return context.Set<T>().SingleOrDefault(x => x.Id == Id);
+        }
+
+        protected virtual void DeleteTable(int Id)
+        {
+            var deletedTable = ViewTable(Id);
+            context.Set<T>().Remove(deletedTable);
+            context.SaveChanges();
+        }
+
+    }
+
+
+    public class TableService : GenericService<Table>
+    {
+        public TableService(BookingContext context) : base(context)
+        {
+        }
+
+        protected override void Add(Table entity)
+        {
+            base.Add(entity);
         }
     }
 }

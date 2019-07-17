@@ -13,7 +13,8 @@
     <div class="col-md-6 order-md-2">
         @Html.ValidationSummary()
 
-        <form method="POST" class="tables">
+        <form method="POST" class="tables" action="/Home/DeleteTable">
+         @Html.HiddenFor(x => x.Id)
             <div class="col-12">
                 <div class="row row-spacer">
                     <div class="col-md-4">
@@ -40,7 +41,7 @@
                     </div>
                 </div>
                     <div class="col-md-8 offset-md-4 row-spacer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Delete</button>
                     </div>
                 </div>
         </form>
