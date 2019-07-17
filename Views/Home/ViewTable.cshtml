@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Adding Tables";
+    ViewData["Title"] = "Deleting and Viewing Tables";
 }
 
 @model Table
@@ -17,11 +17,18 @@
             <div class="col-12">
                 <div class="row row-spacer">
                     <div class="col-md-4">
+                        <label for="Id">ID</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.ValueFor(x => x.Id)
+                    </div>
+                </div>
+                <div class="row row-spacer">
+                    <div class="col-md-4">
                         <label for="Chairs">Chairs</label>
                     </div>
                     <div class="col-md-8">
                         @Html.ValueFor(x => x.Chairs)
-                        @Html.TextBoxFor(x => x.Chairs, null, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="row row-spacer">
@@ -29,13 +36,13 @@
                         <label for="Location">Location</label>
                     </div>
                     <div class="col-md-8">
-                        <select class="form-control" id="Location" asp-for="Location" asp-items="Html.GetEnumSelectList<Web.Models.Location>()"></select>
+                        @Html.ValueFor(x => x.Location)
                     </div>
                 </div>
-                <div class="col-md-8 offset-md-4 row-spacer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="col-md-8 offset-md-4 row-spacer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
                 </div>
-            </div>
         </form>
     </div>
 </div>

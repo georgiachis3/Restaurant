@@ -25,5 +25,10 @@ namespace Web.Services
         {
             return context.Tables.ToList();
         }
+
+        public Table ViewTable(int Id)
+        {
+            return context.Tables.SingleOrDefault(x => x.Id == Id);
+        }
     }
 }

@@ -45,10 +45,20 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult ViewTable(int id)
+        public IActionResult ViewTable(int Id)
         {
-            //var table = service.GetTable(id);
+            var table = tableService.ViewTable(Id);
+            if (table == null)
+            {
+                return NotFound();
+            }
             return View(table);
+        }
+        [HttpPost]
+        public IActionResult DeleteTable (int Id)
+        {
+            
+
         }
 
         [HttpGet]
