@@ -13,6 +13,7 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
         BookingService bookingService;
+        HolidayService holidayService;
 
         public HomeController(BookingContext context)
         {
@@ -70,21 +71,22 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult Holidays(Holidays Holidays)
         {
-            if (DateTime.Now > Holidays.StartDate)
+            try
+            {
+                holidayService.CreateHoliday(Holidays);
+                return View(Holidays);
+            }
+            catch (HolidayIsInPastException)
             {
                 ModelState.AddModelError(string.Empty, "This date is in the past.");
-                return View(Holidays);
             }
-            if (Holidays.EndDate > Holidays.StartDate.AddMonths(1))
+            catch (GreaterThanMonthException)
             {
                 ModelState.AddModelError(string.Empty, "You cannot take holiday for longer than a month");
-                return View(Holidays);
             }
-
-
-            Context.Holidays.Add(Holidays);
-            Context.SaveChanges();
             return View(Holidays);
+     
+            
         }
         [HttpPost]
         public IActionResult Booking(Booking booking, DateTime date, DateTime time, Booking newBooking)
