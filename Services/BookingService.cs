@@ -23,6 +23,11 @@ namespace Web.Data
 
         }
 
+        public IEnumerable<Booking> GetAll()
+        {
+            return context.Bookings;
+        }
+
         public void CreateBooking(Booking booking, Booking newBooking)
         {
 

@@ -54,7 +54,7 @@ namespace Web.Controllers
         }
         public IActionResult ListofHolidays()
         {
-            return View(Context.Holidays.ToList());
+            return View(bookingService.GetAll());
         }
         public IActionResult FAQs()
         {
@@ -65,7 +65,7 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult Admin()
         {
-            return View(Context.Bookings.ToList());
+            return View(bookingService.GetAll());
         }
         [Authorize]
         [HttpPost]
@@ -85,7 +85,7 @@ namespace Web.Controllers
                 ModelState.AddModelError(string.Empty, "You cannot take holiday for longer than a month");
             }
             return View(Holidays);
-     
+           
             
         }
         [HttpPost]
@@ -99,6 +99,11 @@ namespace Web.Controllers
 
             try
             {
+                var conflictsWithHolidays = holidayService.IsConflict(booking);
+                if (conflictsWithHolidays)
+                {
+                    throw new RestrauntClosedException();
+                }
                 bookingService.CreateBooking(booking, newBooking);
                 return View("Confirmation", booking);
             }
@@ -119,16 +124,9 @@ namespace Web.Controllers
                 ModelState.AddModelError(string.Empty, "There are no tables available at this time/date");
             }
             return View(booking);
-            /////////
 
-            foreach (var Holidays in Context.Holidays)
-            {
-                if (booking.Time > Holidays.StartDate && booking.Time < Holidays.EndDate.AddDays(1))
-                {
-                    ModelState.AddModelError(string.Empty, "The restaurant is closed due to the owner being on holiday");
-                    return View(booking);
-                }
-            }
+          
+          
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
