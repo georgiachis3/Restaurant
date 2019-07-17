@@ -91,7 +91,11 @@ namespace Web.Services
             });
 
             context.SaveChanges();
-
+        }
+        public void AddTables(Table table)
+        {
+            context.Tables.Add(table);
+            context.SaveChanges();
         }
     }
 }

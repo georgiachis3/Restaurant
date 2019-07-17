@@ -50,9 +50,18 @@ namespace Web.Controllers
         {
             return View();
         }
-        public IActionResult Tables()
+
+        [HttpGet]
+        public IActionResult AddingTables()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Tables(Table table)
+        {
+            tableService.AddTables(table);
+            return View(table);
         }
 
         [Authorize]
@@ -77,12 +86,12 @@ namespace Web.Controllers
         }
         [Authorize]
         [HttpPost]
-        public IActionResult Holidays(Holidays Holidays)
+        public IActionResult Holidays(Holidays holidays)
         {
             try
             {
-                holidayService.CreateHoliday(Holidays);
-                return View(Holidays);
+                holidayService.CreateHoliday(holidays);
+                return View(holidays);
             }
             catch (HolidayIsInPastException)
             {
@@ -92,7 +101,7 @@ namespace Web.Controllers
             {
                 ModelState.AddModelError(string.Empty, "You cannot take holiday for longer than a month");
             }
-            return View(Holidays);
+            return View(holidays);
            
             
         }
@@ -132,10 +141,9 @@ namespace Web.Controllers
                 ModelState.AddModelError(string.Empty, "There are no tables available at this time/date");
             }
             return View(booking);
-
-          
-          
         }
+
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
