@@ -12,21 +12,21 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
-        public BookingContext Context { get; set; }
+        /*public BookingContext Context { get; set; }
 
-        public Dictionary<int, TimeSpan> BookingLengthDictionary = new Dictionary<int, TimeSpan>();
+        public Dictionary<int, TimeSpan> BookingLengthDictionary = new Dictionary<int, TimeSpan>();*/
 
 
 
         public HomeController(BookingContext context)
         {
-            Context = context;
+            /*Context = context;
 
             for (int i = 1; i <= 6 ; i++)
             {
                 BookingLengthDictionary.Add(i, TimeSpan.FromMinutes(i * 30));
             }
-
+            */
 
             bool available = Context.Tables.Any();
 
@@ -99,6 +99,7 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult Booking(Booking booking, DateTime date, DateTime time, Booking newBooking)
         {
+
             booking.Time = date + time.TimeOfDay;
 
             if (DateTime.Now > booking.Time)
