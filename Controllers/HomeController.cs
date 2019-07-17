@@ -114,6 +114,10 @@ namespace Web.Controllers
             {
                 ModelState.AddModelError(string.Empty, "You cannot take holiday for longer than a month");
             }
+            catch (NotPossibleException)
+            {
+                ModelState.AddModelError(string.Empty, "Your holiday cannot end before it starts.");
+            }
             return View(holidays);
            
             
@@ -159,10 +163,6 @@ namespace Web.Controllers
             catch (DateInPastException)
             {
                 ModelState.AddModelError(string.Empty, "This date is in the past.");
-            }
-            catch (NotPossibleException)
-            {
-                ModelState.AddModelError(string.Empty, "Your holiday cannot end before it starts.");
             }
             return View(booking);
             }
