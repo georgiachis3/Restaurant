@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Web.Data;
 using Web.Models;
 
@@ -39,7 +40,7 @@ namespace Web.Models
            
         public IEnumerable<Holidays> GetAll()
         {
-            return context.Holidays;
+            return context.Holidays.ToList();
         }
 
     }

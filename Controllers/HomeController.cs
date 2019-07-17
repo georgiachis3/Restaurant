@@ -18,6 +18,7 @@ namespace Web.Controllers
         public HomeController(BookingContext context)
         {
             bookingService = new BookingService(context);
+            holidayService = new HolidayService(context);
 
             bool available = bookingService.CheckingForTable();
 
