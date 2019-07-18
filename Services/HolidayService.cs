@@ -12,21 +12,22 @@ namespace Web.Models
     {
         public HolidayService(BookingContext context) : base(context)
         {
+            int error = (int)HolidayBookingStatus.OK;
         }
 
         public override void Add(Holidays entity)
         {
             if (DateTime.Now > entity.StartDate)
             {
-                throw new HolidayIsInPastException();
+                int error = (int)HolidayBookingStatus.IsInPast;
             }
             if (entity.EndDate > entity.StartDate.AddMonths(1))
             {
-                throw new GreaterThanMonthException();
+                int error = (int)HolidayBookingStatus.GreaterThanMonth;
             }
             if (entity.EndDate < entity.StartDate)
             {
-                throw new NotPossibleException();
+                int error = (int)HolidayBookingStatus.BeforeStart;
             }
             base.Add(entity);
         }
@@ -41,5 +42,13 @@ namespace Web.Models
             }
             return false;
         }
+    }
+
+    public enum HolidayBookingStatus
+    {
+        OK,
+        IsInPast,
+        GreaterThanMonth,
+        BeforeStart
     }
 }          
