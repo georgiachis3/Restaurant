@@ -37,7 +37,7 @@ jQuery.validator.addMethod("future", function(value, element) {
         messages: {
             date: "Please enter a valid date",
             time: "Please enter a valid time",
-            Guests: "Please enter a number of guests (between 1 and 6)",
+            Guests: "Please enter a number of guests (between 1 and 12)",
             FirstName: "Please enter a first name",
             LastName: "Please enter a last name",
             PhoneNumber: "Please enter a phone number (with no symbols or spaces)"

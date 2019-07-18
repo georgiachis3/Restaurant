@@ -14,6 +14,22 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
+        private Dictionary<HolidayBookingStatus, string> HolidayErrorMessageLookup = new Dictionary<HolidayBookingStatus, string>()
+        {
+            {HolidayBookingStatus.BeforeStart, "Your holiday cannot end before it starts." },
+            {HolidayBookingStatus.GreaterThanMonth, "You cannot take holiday for longer than a month" },
+            {HolidayBookingStatus.IsInPast, "This date is in the past." },
+        };
+        private Dictionary<BookingStatus, string> BookingErrorMessageLookup = new Dictionary<BookingStatus, string>()
+        {
+            {BookingStatus.Closed, "The restaurant is closed with the times you have entered." },
+            {BookingStatus.Future, "You cannot book more than a year and a half in advanced." },
+            {BookingStatus.NoTable, "There are no tables available at this time/date" },
+            {BookingStatus.Sunday, "The restaurant is closed on Sundays." }
+            /*{BookingStatus.OnHoliday, "" },
+            {BookingStatus.InPast, "" },*/
+        };
+
         BookingService bookingService;
         HolidayService holidayService;
         TableService tableService;
@@ -103,23 +119,14 @@ namespace Web.Controllers
         public IActionResult Holidays(Holidays holidays)
         {
 
-            var error = holidayService.AddHolidayBooking(holidays);
-            if (error == HolidayBookingStatus.OK)
+            var status = holidayService.AddHolidayBooking(holidays);
+            if (status == HolidayBookingStatus.OK)
             {
                 return View(holidays);
             }
-            if (error == HolidayBookingStatus.IsInPast)
-            {
-                ModelState.AddModelError(string.Empty, "This date is in the past.");
-            }
-            if (error == HolidayBookingStatus.GreaterThanMonth)
-            {
-                ModelState.AddModelError(string.Empty, "You cannot take holiday for longer than a month");
-            }
-            if (error == HolidayBookingStatus.BeforeStart)
-            {
-                ModelState.AddModelError(string.Empty, "Your holiday cannot end before it starts.");
-            }
+
+            ModelState.AddModelError(string.Empty, HolidayErrorMessageLookup[status]);
+
             return View(holidays);
 
 
@@ -132,37 +139,23 @@ namespace Web.Controllers
             if (DateTime.Now > booking.Time)
             {
                 ModelState.AddModelError(string.Empty, "This date is in the past.");
+                return View(booking);
             }
 
             var conflictsWithHolidays = holidayService.IsConflict(booking);
             if (conflictsWithHolidays)
             {
-                ModelState.AddModelError(string.Empty, "The restaurant is closed with the times you have entered.");
+                ModelState.AddModelError(string.Empty, "The restaurant is closed as the owner is on holiday.");
+                return View(booking);
             }
-            var error2 = bookingService.AddBooking(booking);
+            var status2 = bookingService.AddBooking(booking);
 
-            if (error2 == BookingStatus.BookingMade)
+            if (status2 == BookingStatus.BookingMade)
             {
                 return View("Confirmation", booking);
             }
 
-
-            if (error2 == BookingStatus.Closed)
-            {
-                ModelState.AddModelError(string.Empty, "The restaurant is closed with the times you have entered.");
-            }
-            if (error2 == BookingStatus.Future)
-            {
-                ModelState.AddModelError(string.Empty, "You cannot book more than a year and a half in advanced.");
-            }
-            if (error2 == BookingStatus.Sunday)
-            {
-                ModelState.AddModelError(string.Empty, "The restaurant is closed on Sundays.");
-            }
-            if (error2 == BookingStatus.NoTable)
-            {
-                ModelState.AddModelError(string.Empty, "There are no tables available at this time/date");
-            }
+            ModelState.AddModelError(string.Empty, BookingErrorMessageLookup[status2]);
             return View(booking);
         }
 

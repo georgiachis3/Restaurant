@@ -95,7 +95,9 @@ namespace Web.Data
             Closed,
             Future,
             Sunday,
-            NoTable
+            NoTable,
+            OnHoliday,
+            InPast
         }
 
     }
