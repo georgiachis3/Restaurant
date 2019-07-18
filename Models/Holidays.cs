@@ -23,6 +23,11 @@ namespace Web.Models
         [MinLength(2)]
         public String Reason
         { get; set; }
-
     }
+    public abstract class Identifiable
+        {
+            [Key]
+            public int Id { get; set; }
+        }
 }
+ 

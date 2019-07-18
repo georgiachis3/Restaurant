@@ -10,20 +10,22 @@
 <div class="col">
 	<table>
 		<thead>
-			<tr>
-				<th>Start Date</th>
-				<th>End Date</th>
-				<th>Reason</th>
-			</tr>
+            <tr>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Reason</th>
+                <th>Details</th>
+            </tr>
 		</thead>
 		<tbody>
 			@foreach (var Holidays in Model)
 			{
-				<tr>
-					<td> @Holidays.StartDate</td>
-					<td> @Holidays.EndDate</td>
-					<td> @Holidays.Reason</td>
-				</tr>
+            <tr>
+                <td> @Holidays.StartDate</td>
+                <td> @Holidays.EndDate</td>
+                <td> @Holidays.Reason</td>
+                <td>@Html.ActionLink("Details", "ViewHoliday", "Holidays", new { id = Holidays.Id })</td>
+            </tr>
 
 
 			}

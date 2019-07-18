@@ -28,8 +28,18 @@ namespace Web.Controllers
             holidayService = new HolidayService(context);
            
         }
-
-        public IActionResult DeleteTable(int Id)
+        [HttpGet]
+        public IActionResult ViewHoliday(int Id)
+        {
+            var holiday = holidayService.Get(Id);
+            if (holiday == null)
+            {
+                return NotFound();
+            }
+            return View(holiday);
+        }
+        [HttpPost]
+        public IActionResult DeleteHoliday(int Id)
         {
             holidayService.Delete(Id);
             return RedirectToAction("ListofHolidays");
