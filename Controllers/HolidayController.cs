@@ -20,14 +20,16 @@ namespace Web.Controllers
             {HolidayBookingStatus.IsInPast, "This date is in the past." },
         };
 
+        BookingService bookingService;
         HolidayService holidayService;
-       
+
 
         public HolidayController(BookingContext context)
         {
-            
+
+            bookingService = new BookingService(context);
             holidayService = new HolidayService(context);
-           
+
         }
         [HttpGet]
         public IActionResult ViewHoliday(int Id)
@@ -50,30 +52,60 @@ namespace Web.Controllers
         {
             return View(holidayService.GetAll());
         }
-       
-      
+
+        [Authorize]
+        public IActionResult Holidays()
+        {
+            var viewModel = new BookingConflictViewModel();
+            viewModel.ConflictedBooking = new List<Booking>();
+            viewModel.InputtedHoliday = new Holidays();
+            return View(viewModel);
+        }
+
         [Authorize]
         [HttpPost]
-        public IActionResult Holidays(Holidays holidays)
+        public IActionResult Holidays(BookingConflictViewModel viewModel, bool confirmDelete = false)
         {
-            var conflictions = holidayService.FindConflicts(holidays);
-            if (conflictions.Any())
+            if (viewModel.ConflictedBooking != null && viewModel.ConflictedBooking.Any())
             {
-                var viewModel = new BookingConflictViewModel();
-                viewModel.InputtedHoliday = holidays;
-                viewModel.ConflictedBooking = conflictions;
-                return View("ConflictedBookings", viewModel);
+                if (confirmDelete)
+                {
+                   foreach(var deletedBooking in viewModel.ConflictedBooking)
+                    {
+                        bookingService.Delete(deletedBooking.Id);
+                    }
+                }
+                else
+                {
+                    foreach (var item in ModelState)
+                    {
+                        if (item.Key.Contains("ConflictedBooking"))
+                        {
+                            ModelState.ClearValidationState(item.Key);
+                            ModelState.MarkFieldValid(item.Key);
+                        }
+                    }                    
+                }
             }
 
-            var status = holidayService.AddHolidayBooking(holidays);
+
+            var conflictions = holidayService.FindConflicts(viewModel.InputtedHoliday);
+            if (conflictions.Any())
+            {
+                viewModel.ConflictedBooking = conflictions;
+                return View(viewModel);
+            }
+
+
+            var status = holidayService.AddHolidayBooking(viewModel.InputtedHoliday);
             if (status == HolidayBookingStatus.OK)
             {
-                return View(holidays);
+                return RedirectToAction("ListofHolidays");
             }
 
             ModelState.AddModelError(string.Empty, HolidayErrorMessageLookup[status]);
 
-            return View(holidays);
+            return View(viewModel);
 
 
         }

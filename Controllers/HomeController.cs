@@ -30,11 +30,6 @@ namespace Web.Controllers
             return View();
         }
 
-        [Authorize]
-        public IActionResult Holidays()
-        {
-            return View();
-        }
        
         public IActionResult FAQs()
         {
