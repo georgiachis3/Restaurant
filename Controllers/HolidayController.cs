@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Data;
@@ -55,6 +56,14 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult Holidays(Holidays holidays)
         {
+            var conflictions = holidayService.FindConflicts(holidays);
+            if (conflictions.Any())
+            {
+                var viewModel = new BookingConflictViewModel();
+                viewModel.InputtedHoliday = holidays;
+                viewModel.ConflictedBooking = conflictions;
+                return View("ConflictedBookings", viewModel);
+            }
 
             var status = holidayService.AddHolidayBooking(holidays);
             if (status == HolidayBookingStatus.OK)

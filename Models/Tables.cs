@@ -16,9 +16,4 @@ namespace Web.Models
     public ICollection<Booking> Bookings { get; set; }
     }
 
-    public abstract class Identifiable
-    {
-        [Key]
-        public int Id { get; set; }
-    }
 }

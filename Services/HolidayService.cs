@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Web.Data;
 using Web.Services;
 
@@ -23,11 +25,13 @@ namespace Web.Models
             }
             if (entity.EndDate < entity.StartDate)
             {
-               return HolidayBookingStatus.BeforeStart;
+                return HolidayBookingStatus.BeforeStart;
             }
             base.Add(entity);
             return HolidayBookingStatus.OK;
         }
+
+
         public bool IsConflict(Booking booking)
         {
             foreach (var Holidays in context.Holidays)
@@ -38,6 +42,12 @@ namespace Web.Models
                 }
             }
             return false;
+        }
+
+
+        public IList<Booking> FindConflicts(Holidays conflictedholidays)
+        {
+            return context.Bookings.Where(x => x.Time > conflictedholidays.StartDate && x.Time < conflictedholidays.EndDate.AddDays(1)).ToList();
         }
     }
 

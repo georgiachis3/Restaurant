@@ -10,7 +10,7 @@
 
 @Html.ValidationSummary()
 
-<form method="POST" class="holidays">
+<form method="POST" class="holidays" action="@Url.Action("Holidays", "Holiday")">
 	<div class="row row-spacer">
 		<div class="col-md-4">
 			<label for="StartDate">Start Date</label>
