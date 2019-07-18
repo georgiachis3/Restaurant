@@ -1,41 +1,78 @@
-@model Holidays;
+@model BookingConflictViewModel;
 
 @{
-	ViewData["Title"] = "Holidays";
+    ViewData["Title"] = "Holidays";
 }
 <div class="text-center">
-	<h1>@ViewData["Title"]</h1>
-	<p>Please complete this form to book holidays</p>
+    <h1>@ViewData["Title"]</h1>
+    <p>Please complete this form to book holidays</p>
 </div>
 
 @Html.ValidationSummary()
 
 <form method="POST" class="holidays" action="@Url.Action("Holidays", "Holiday")">
-	<div class="row row-spacer">
-		<div class="col-md-4">
-			<label for="StartDate">Start Date</label>
-		</div>
-		<div class="col-md-8">
-			<input type="Date" class="form-control" name="startdate" id="startdate" />
-		</div>
-	</div>
-	<div class="row row-spacer">
-		<div class="col-md-4">
-			<label for="EndDate">End Date</label>
-		</div>
-		<div class="col-md-8">
-			<input type="Date" class="form-control" name="enddate" id="enddate" />
-		</div>
-	</div>
-	<div class="row row-spacer">
-		<div class="col-md-4">
-			<label for="Reason">Reason for Holiday</label>
-		</div>
-		<div class="col-md-8">
-			@Html.TextBoxFor(x => x.Reason, null, new { @class = "form-control" })
-		</div>
-	</div>
-	<div class="col-md-8 offset-md-4">
-		<button type="submit" class="btn btn-primary">Submit</button>
-	</div>
+    <div class="row row-spacer">
+        <div class="col-md-4">
+            <label for="StartDate">Start Date</label>
+        </div>
+        <div class="col-md-8">
+            <input type="Date" class="form-control" name="startdate" id="startdate" />
+        </div>
+    </div>
+    <div class="row row-spacer">
+        <div class="col-md-4">
+            <label for="EndDate">End Date</label>
+        </div>
+        <div class="col-md-8">
+            <input type="Date" class="form-control" name="enddate" id="enddate" />
+        </div>
+    </div>
+    <div class="row row-spacer">
+        <div class="col-md-4">
+            <label for="Reason">Reason for Holiday</label>
+        </div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(x => x.InputtedHoliday.Reason, null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="col-md-8 offset-md-4">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
 </form>
+
+@if (Model.ConflictedBooking.Any())
+{
+    <div class="col">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date and Time</th>
+                    <th>Guests</th>
+                    <th>Location</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Phone Number</th>
+                    <th>Email Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model.ConflictedBooking)
+                {
+                    <tr>
+                        <td> @booking.Time</td>
+                        <td> @booking.Guests</td>
+                        <td> @booking.RequestedLocation</td>
+                        <td> @booking.FirstName</td>
+                        <td> @booking.LastName</td>
+                        <td> @booking.PhoneNumber</td>
+                        <td> @booking.EmailAddress</td>
+                    </tr>
+
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+}

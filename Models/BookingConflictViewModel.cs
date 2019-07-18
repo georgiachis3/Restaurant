@@ -1,13 +1,14 @@
 using System;
+using System.Collections.Generic;
 
 namespace Web.Models
 {
     public class BookingConflictViewModel
     {
-        public String InputtedHoliday
+        public Models.Holidays InputtedHoliday
         { get; set; }
 
-        public String ConflictedBooking
+        public IList<Booking> ConflictedBooking
         { get; set; }
     }
 }
