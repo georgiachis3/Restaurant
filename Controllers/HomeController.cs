@@ -136,8 +136,11 @@ namespace Web.Controllers
         {
             booking.Time = date + time.TimeOfDay;
 
+            BookingStatus status;
+
             if (DateTime.Now > booking.Time)
             {
+                status = BookingStatus.InPast;
                 ModelState.AddModelError(string.Empty, "This date is in the past.");
                 return View(booking);
             }
