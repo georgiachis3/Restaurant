@@ -25,9 +25,9 @@ namespace Web.Controllers
             {BookingStatus.Closed, "The restaurant is closed with the times you have entered." },
             {BookingStatus.Future, "You cannot book more than a year and a half in advanced." },
             {BookingStatus.NoTable, "There are no tables available at this time/date" },
-            {BookingStatus.Sunday, "The restaurant is closed on Sundays." }
-            /*{BookingStatus.OnHoliday, "" },
-            {BookingStatus.InPast, "" },*/
+            {BookingStatus.Sunday, "The restaurant is closed on Sundays." },
+            {BookingStatus.OnHoliday, "The restaurant is closed as the owner is on holiday." },
+            {BookingStatus.InPast, "This date is in the past." },
         };
 
         BookingService bookingService;
@@ -137,28 +137,26 @@ namespace Web.Controllers
             booking.Time = date + time.TimeOfDay;
 
             BookingStatus status;
-
+            var goat = 1;
             if (DateTime.Now > booking.Time)
             {
                 status = BookingStatus.InPast;
-                ModelState.AddModelError(string.Empty, "This date is in the past.");
-                return View(booking);
             }
-
-            var conflictsWithHolidays = holidayService.IsConflict(booking);
-            if (conflictsWithHolidays)
+            else if (holidayService.IsConflict(booking))
             {
-                ModelState.AddModelError(string.Empty, "The restaurant is closed as the owner is on holiday.");
-                return View(booking);
+                status = BookingStatus.OnHoliday;
             }
-            var status2 = bookingService.AddBooking(booking);
+            else
+            {
+                status = bookingService.AddBooking(booking);
+            }
 
-            if (status2 == BookingStatus.BookingMade)
+            if (status == BookingStatus.BookingMade)
             {
                 return View("Confirmation", booking);
             }
 
-            ModelState.AddModelError(string.Empty, BookingErrorMessageLookup[status2]);
+            ModelState.AddModelError(string.Empty, BookingErrorMessageLookup[status]);
             return View(booking);
         }
 
