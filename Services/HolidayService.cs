@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Web.Data;
-using Web.Models;
 using Web.Services;
 
 namespace Web.Models

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Web.Data;
 using Web.Models;
 
@@ -15,7 +13,7 @@ namespace Web.Services
         {
             this.context = context;
         }
-
+        
         public virtual void Add(T entity)
         {
             context.Set<T>().Add(entity);
@@ -45,11 +43,6 @@ namespace Web.Services
     {
         public TableService(BookingContext context) : base(context)
         {
-        }
-
-        public override void Add(Table entity)
-        {
-            base.Add(entity);
         }
     }
 }
