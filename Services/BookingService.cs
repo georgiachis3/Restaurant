@@ -52,7 +52,7 @@ namespace Web.Data
             }
         }
 
-        public override void Add(Booking entity)
+        public BookingStatus AddBooking(Booking entity)
         {
             var bookingLength = BookingLengthDictionary[entity.Guests];
 
@@ -63,18 +63,18 @@ namespace Web.Data
 
             if ((now < start) || (now > end))
             {
-                throw new RestrauntClosedException();
+                return BookingStatus.Closed;
             }
 
             if (entity.Time > DateTime.Now.AddMonths(18))
             {
-                throw new BookingOutOfRangeException();
+                return BookingStatus.Future;
             }
 
             DayOfWeek closinghours = entity.Time.DayOfWeek;
             if (closinghours == DayOfWeek.Sunday)
             {
-                throw new ClosedOnSundaysException();
+                return BookingStatus.Sunday;
             }
 
             entity.Table = GetTable(entity);
@@ -82,12 +82,21 @@ namespace Web.Data
 
             if (entity.Table == null)
             {
-                throw new NoTableException();
+                return BookingStatus.NoTable;
 
             }
             base.Add(entity);
+            return BookingStatus.BookingMade;
         }
 
+        public enum BookingStatus
+        {
+            BookingMade,
+            Closed,
+            Future,
+            Sunday,
+            NoTable
+        }
 
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Web.Data;
 using Web.Models;
 using Web.Services;
+using static Web.Data.BookingService;
 
 namespace Web.Controllers
 {
@@ -101,71 +102,69 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult Holidays(Holidays holidays)
         {
-            try
+
+            var error = holidayService.AddHolidayBooking(holidays);
+            if (error == HolidayBookingStatus.OK)
             {
-                holidayService.Add(holidays);
                 return View(holidays);
             }
-            catch (HolidayIsInPastException)
+            if (error == HolidayBookingStatus.IsInPast)
             {
                 ModelState.AddModelError(string.Empty, "This date is in the past.");
             }
-            catch (GreaterThanMonthException)
+            if (error == HolidayBookingStatus.GreaterThanMonth)
             {
                 ModelState.AddModelError(string.Empty, "You cannot take holiday for longer than a month");
             }
-            catch (NotPossibleException)
+            if (error == HolidayBookingStatus.BeforeStart)
             {
                 ModelState.AddModelError(string.Empty, "Your holiday cannot end before it starts.");
             }
             return View(holidays);
-           
-            
+
+
         }
         [HttpPost]
         public IActionResult Booking(Booking booking, DateTime date, DateTime time)
         {
-
             booking.Time = date + time.TimeOfDay;
 
-            try
-            {
-                if (DateTime.Now > booking.Time)
-                {
-                    throw new DateInPastException();
-                }
-
-                var conflictsWithHolidays = holidayService.IsConflict(booking);
-                if (conflictsWithHolidays)
-                {
-                    throw new RestrauntClosedException();
-                }
-                bookingService.Add(booking);
-                return View("Confirmation", booking);
-            }
-
-            catch (RestrauntClosedException)
-            {
-                ModelState.AddModelError(string.Empty, "The restaurant is closed with the times you have entered.");
-            }
-            catch (BookingOutOfRangeException)
-            {
-                ModelState.AddModelError(string.Empty, "You cannot book more than a year and a half in advanced.");
-            }
-            catch (ClosedOnSundaysException)
-            {
-                ModelState.AddModelError(string.Empty, "The restaurant is closed on Sundays.");
-            }
-            catch (NoTableException)
-            {
-                ModelState.AddModelError(string.Empty, "There are no tables available at this time/date");
-            }
-            catch (DateInPastException)
+            if (DateTime.Now > booking.Time)
             {
                 ModelState.AddModelError(string.Empty, "This date is in the past.");
             }
-            return View(booking);
+
+            var conflictsWithHolidays = holidayService.IsConflict(booking);
+            if (conflictsWithHolidays)
+            {
+                ModelState.AddModelError(string.Empty, "The restaurant is closed with the times you have entered.");
             }
+            var error2 = bookingService.AddBooking(booking);
+
+            if (error2 == BookingStatus.BookingMade)
+            {
+                return View("Confirmation", booking);
+            }
+
+
+            if (error2 == BookingStatus.Closed)
+            {
+                ModelState.AddModelError(string.Empty, "The restaurant is closed with the times you have entered.");
+            }
+            if (error2 == BookingStatus.Future)
+            {
+                ModelState.AddModelError(string.Empty, "You cannot book more than a year and a half in advanced.");
+            }
+            if (error2 == BookingStatus.Sunday)
+            {
+                ModelState.AddModelError(string.Empty, "The restaurant is closed on Sundays.");
+            }
+            if (error2 == BookingStatus.NoTable)
+            {
+                ModelState.AddModelError(string.Empty, "There are no tables available at this time/date");
+            }
+            return View(booking);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -12,24 +12,24 @@ namespace Web.Models
     {
         public HolidayService(BookingContext context) : base(context)
         {
-            int error = (int)HolidayBookingStatus.OK;
         }
 
-        public override void Add(Holidays entity)
+        public HolidayBookingStatus AddHolidayBooking(Holidays entity)
         {
             if (DateTime.Now > entity.StartDate)
             {
-                int error = (int)HolidayBookingStatus.IsInPast;
+                return HolidayBookingStatus.IsInPast;
             }
             if (entity.EndDate > entity.StartDate.AddMonths(1))
             {
-                int error = (int)HolidayBookingStatus.GreaterThanMonth;
+                return HolidayBookingStatus.GreaterThanMonth;
             }
             if (entity.EndDate < entity.StartDate)
             {
-                int error = (int)HolidayBookingStatus.BeforeStart;
+               return HolidayBookingStatus.BeforeStart;
             }
             base.Add(entity);
+            return HolidayBookingStatus.OK;
         }
         public bool IsConflict(Booking booking)
         {
