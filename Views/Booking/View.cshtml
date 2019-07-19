@@ -13,7 +13,7 @@
     <div class="col-md-6 order-md-2">
         @Html.ValidationSummary()
     
-        <form method="POST" class="reservation" action="@Url.Action("DeleteBooking", "Booking")">
+        <form method="POST" class="reservation" action="@Url.Action("Delete", "Booking")">
             @Html.HiddenFor(x => x.Id)
             <div class="col-12">
 

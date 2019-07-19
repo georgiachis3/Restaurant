@@ -28,6 +28,7 @@ namespace Web.Controllers
         public HolidayController(BookingContext holidayContext) : base(new GenericService<Holidays>(holidayContext))
         {
             bookingService = new BookingService(holidayContext);
+            holidayService = new HolidayService(holidayContext);
         }
         [HttpGet]
         
@@ -77,7 +78,7 @@ namespace Web.Controllers
             var status = holidayService.AddHolidayBooking(viewModel.InputtedHoliday);
             if (status == HolidayBookingStatus.OK)
             {
-                return RedirectToAction("ListofHolidays");
+                return RedirectToAction("List");
             }
 
             ModelState.AddModelError(string.Empty, HolidayErrorMessageLookup[status]);
