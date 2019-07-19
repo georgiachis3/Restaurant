@@ -28,10 +28,10 @@ namespace Web.Controllers
         BookingService bookingService;
 
 
-        public BookingController(BookingContext context) : base(new GenericService<Booking>(context))
+        public BookingController(BookingContext bookingContext) : base(new GenericService<Booking>(bookingContext))
         {
-            holidayService = new HolidayService(context);
-            bookingService = new BookingService(context);
+            holidayService = new HolidayService(bookingContext);
+            bookingService = new BookingService(bookingContext);
         }
 
         public IActionResult Booking()
@@ -48,32 +48,32 @@ namespace Web.Controllers
         
         
         [HttpPost]
-        public IActionResult Booking(Booking booking, DateTime date, DateTime time)
+        public IActionResult Booking(Booking createdBooking, DateTime date, DateTime time)
         {
-            booking.Time = date + time.TimeOfDay;
+            createdBooking.Time = date + time.TimeOfDay;
 
             BookingStatus status;
             var goat = "goat";
-            if (DateTime.Now > booking.Time)
+            if (DateTime.Now > createdBooking.Time)
             {
                 status = BookingStatus.InPast;
             }
-            else if (holidayService.IsConflict(booking))
+            else if (holidayService.IsConflict(createdBooking))
             {
                 status = BookingStatus.OnHoliday;
             }
             else
             {
-                status = bookingService.AddBooking(booking);
+                status = bookingService.AddBooking(createdBooking);
             }
 
             if (status == BookingStatus.BookingMade)
             {
-                return View("Confirmation", booking);
+                return View("Confirmation", createdBooking);
             }
 
             ModelState.AddModelError(string.Empty, BookingErrorMessageLookup[status]);
-            return View(booking);
+            return View(createdBooking);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

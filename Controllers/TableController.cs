@@ -19,11 +19,11 @@ namespace Web.Controllers
         TableService tableService;
         
 
-        public TableController(BookingContext context) : base(new GenericService<Table>(context))
+        public TableController(BookingContext tableContext) : base(new GenericService<Table>(tableContext))
         {
-            bookingService = new BookingService(context);
+            bookingService = new BookingService(tableContext);
 
-            tableService = new TableService(context);
+            tableService = new TableService(tableContext);
         }
 
         [HttpGet]
@@ -33,27 +33,28 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddingTables(Table table)
+        public IActionResult AddingTables(Table reservedTable)
         {
-            service.Add(table);
-            return View(table);
+            service.Add(reservedTable);
+            return View(reservedTable);
         }
         [HttpGet]
-        public IActionResult Table()
+        public IActionResult ViewTable(int id)
         {
             var viewModel2 = new TableConflictViewModel();
             viewModel2.ConflictedBooking2 = new List<Booking>();
-            viewModel2.DeletedTable = new Table();
+            viewModel2.DeletedTable = service.Get(id);
             return View(viewModel2);
         }
+        
         [HttpPost]
-        public IActionResult DeleteGoat(TableConflictViewModel viewModel2, bool confirmDelete2 = false)
+        public IActionResult ViewTable(TableConflictViewModel tableViewModel, bool deleteTable = false)
         {
-            if (viewModel2.ConflictedBooking2 != null && viewModel2.ConflictedBooking2.Any())
+            if (tableViewModel.ConflictedBooking2 != null && tableViewModel.ConflictedBooking2.Any())
             {
-                if (confirmDelete2)
+                if (deleteTable)
                 {
-                    foreach (var deletedBooking in viewModel2.ConflictedBooking2)
+                    foreach (var deletedBooking in tableViewModel.ConflictedBooking2)
                     {
                         bookingService.Delete(deletedBooking.Id);
                     }
@@ -71,14 +72,14 @@ namespace Web.Controllers
                 }
             }
 
-            var conflictions2 = tableService.FindConflicts(viewModel2.DeletedTable);
-            if (conflictions2.Any())
+            var tableConflictions = tableService.FindConflicts(tableViewModel.DeletedTable);
+            if (tableConflictions.Any())
             {
-                viewModel2.ConflictedBooking2 = conflictions2;
-                return View(viewModel2);
+                tableViewModel.ConflictedBooking2 = tableConflictions;
+                return View(tableViewModel);
             }
 
-            service.Delete(viewModel2.DeletedTable.Id);
+            service.Delete(tableViewModel.DeletedTable.Id);
 
             return RedirectToAction("List");
         }

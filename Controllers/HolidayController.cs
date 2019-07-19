@@ -25,9 +25,9 @@ namespace Web.Controllers
         BookingService bookingService;
         HolidayService holidayService;
 
-        public HolidayController(BookingContext context) : base(new GenericService<Holidays>(context))
+        public HolidayController(BookingContext holidayContext) : base(new GenericService<Holidays>(holidayContext))
         {
-            bookingService = new BookingService(context);
+            bookingService = new BookingService(holidayContext);
         }
         [HttpGet]
         
@@ -66,10 +66,10 @@ namespace Web.Controllers
             }
 
 
-            var conflictions = holidayService.FindConflicts(viewModel.InputtedHoliday);
-            if (conflictions.Any())
+            var holidayConflictions = holidayService.FindConflicts(viewModel.InputtedHoliday);
+            if (holidayConflictions.Any())
             {
-                viewModel.ConflictedBooking = conflictions;
+                viewModel.ConflictedBooking = holidayConflictions;
                 return View(viewModel);
             }
 
