@@ -16,11 +16,10 @@
         <form method="POST" class="reservation" action="@Url.Action("DeleteBooking", "Booking")">
             @Html.HiddenFor(x => x.Id)
             <div class="col-12">
-              
 
                 <div class="row row-spacer">
                     <div class="col-md-4">
-                        <label for="Time">Time</label>
+                        <label for="Time">Date and Time</label>
                     </div>
                     <div class="col-md-8">
                         @Html.ValueFor(x => x.Time)
@@ -34,7 +33,6 @@
                         @Html.ValueFor(x => x.Guests)
                     </div>
                 </div>
-
                 <div class="row row-spacer">
                     <div class="col-md-4">
                         <label for="Location">Location</label>
@@ -66,6 +64,14 @@
                     </div>
                     <div class="col-md-8">
                         @Html.ValueFor(x => x.PhoneNumber)
+                    </div>
+                </div>
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="TableId">Table Number</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.ValueFor(x => x.TableId)
                     </div>
                 </div>
                 <div class="row">

@@ -24,11 +24,14 @@ namespace Web.Controllers
             {BookingStatus.InPast, "This date is in the past." },
         };
 
-        BookingService bookingService;
         HolidayService holidayService;
+        BookingService bookingService;
+
 
         public BookingController(BookingContext context) : base(new GenericService<Booking>(context))
         {
+            holidayService = new HolidayService(context);
+            bookingService = new BookingService(context);
         }
 
         public IActionResult Booking()

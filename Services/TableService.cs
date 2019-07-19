@@ -21,7 +21,7 @@ namespace Web.Services
         }
         public virtual IEnumerable<T> GetAll()
         {
-            return context.Set<T>().ToList();
+            return context.Set<T>().AsQueryable();
         }
 
         public virtual T Get(int Id)
@@ -43,6 +43,11 @@ namespace Web.Services
     {
         public TableService(BookingContext context) : base(context)
         {
+        }
+
+        public IList<Booking> FindConflicts(Table deletedTable)
+        {
+            return context.Bookings.Where(x => x.TableId == deletedTable.Id).ToList();
         }
     }
 }

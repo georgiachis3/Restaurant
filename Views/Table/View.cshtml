@@ -1,0 +1,100 @@
+﻿@model TableConflictViewModel;
+
+@{
+    ViewData["Title"] = "Tables";
+}
+
+
+<div class="text-center">
+    <h1>@ViewData["Title"]</h1>
+    <p>For managing tables.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6 order-md-2">
+        @Html.ValidationSummary()
+
+        <form method="POST" class="tables" action="@Url.Action("DeleteGoat", "Table")">
+            <div class="col-12">
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="Id">ID</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(x => x.DeletedTable.Id, null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="Chairs">Chairs</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(x => x.DeletedTable.Chairs, null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="Location">Location</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(x => x.DeletedTable.Location, null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-8 offset-md-4 row-spacer">
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model.ConflictedBooking2.Any())
+{
+    <div class="col">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date and Time</th>
+                    <th>Guests</th>
+                    <th>Location</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Phone Number</th>
+                    <th>Email Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < Model.ConflictedBooking2.Count(); i++)
+                {
+                    @Html.HiddenFor(x => Model.ConflictedBooking2[i].Id)
+                    <tr>
+                        <td> @Model.ConflictedBooking2[i].Time</td>
+                        <td> @Model.ConflictedBooking2[i].Guests</td>
+                        <td> @Model.ConflictedBooking2[i].RequestedLocation</td>
+                        <td> @Model.ConflictedBooking2[i].FirstName</td>
+                        <td> @Model.ConflictedBooking2[i].LastName</td>
+                        <td> @Model.ConflictedBooking2[i].PhoneNumber</td>
+                        <td> @Model.ConflictedBooking2[i].EmailAddress</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="row row-spacer">
+        <div class="col-md-8 offset-md-4 row-spacer">
+            Confirm deletion of bookings, goat:
+            @Html.CheckBox("confirmDelete")
+        </div>
+    </div>
+}
+
+
+<div class="col-md-8 offset-md-4">
+    <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+
+
+
+

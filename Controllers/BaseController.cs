@@ -12,7 +12,7 @@ namespace Web.Controllers
 {
     public class BaseController<T> : Controller where T : Identifiable
     {
-        GenericService<T> service;
+        protected GenericService<T> service;
 
         public BaseController(GenericService<T> service)
         {
@@ -36,7 +36,7 @@ namespace Web.Controllers
         public IActionResult Delete(int Id)
         {
             service.Delete(Id);
-            return RedirectToAction("Admin");
+            return RedirectToAction("List");
         }
 
         [Authorize]

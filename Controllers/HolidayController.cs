@@ -25,9 +25,9 @@ namespace Web.Controllers
         BookingService bookingService;
         HolidayService holidayService;
 
-
         public HolidayController(BookingContext context) : base(new GenericService<Holidays>(context))
         {
+            bookingService = new BookingService(context);
         }
         [HttpGet]
         

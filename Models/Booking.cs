@@ -19,6 +19,8 @@ namespace Web.Models
         [MinLength(1)]
         public string LastName
         { get; set; }
+
+        public int TableId { get; set; }
         public Table Table
         { get; set; }
         public DateTime Time

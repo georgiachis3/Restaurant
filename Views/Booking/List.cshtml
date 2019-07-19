@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model List<Booking>;
+@model IEnumerable<Booking>;
 
 <div class="col">
     <table>
@@ -27,7 +27,7 @@
                 <td> @booking.LastName</td>
                 <td> @booking.PhoneNumber</td>
                 <td> @booking.EmailAddress</td>
-                <td>@Html.ActionLink("Details", "ViewBooking", "Booking", new { id = booking.Id })</td>
+                <td>@Html.ActionLink("Details", "View", "Booking", new { id = booking.Id })</td>
             </tr>
       
 

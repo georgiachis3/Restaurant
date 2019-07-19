@@ -1,4 +1,4 @@
-@model List<Table>;
+@model IEnumerable<Table>;
 
 @{
 	ViewData["Title"] = "List of Tables";
@@ -24,7 +24,7 @@
                 <td> @Tables.Id</td>
                 <td> @Tables.Chairs</td>
                 <td> @Tables.Location</td>
-                <td>@Html.ActionLink("Details", "ViewTable", "Table", new { id = Tables.Id })</td>
+                <td>@Html.ActionLink("Details", "View", "Table", new { id = Tables.Id })</td>
             </tr>
 
 

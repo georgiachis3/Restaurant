@@ -1,49 +1,49 @@
 ﻿@{
-    ViewData["Title"] = "Deleting and Viewing Tables";
+    ViewData["Title"] = "Deleting and Viewing Holidays";
 }
 
-@model Table
+@model Holidays
 
 <div class="text-center">
     <h1>@ViewData["Title"]</h1>
-    <p>For managing tables.</p>
+    <p>For managing holidays.</p>
 </div>
 
 <div class="row">
     <div class="col-md-6 order-md-2">
         @Html.ValidationSummary()
 
-        <form method="POST" class="tables" action="@Url.Action("DeleteTable", "Table")">
+        <form method="POST" class="tables" action="@Url.Action("Delete", "Holiday")">
          @Html.HiddenFor(x => x.Id)
             <div class="col-12">
                 <div class="row row-spacer">
                     <div class="col-md-4">
-                        <label for="Id">ID</label>
+                        <label for="StartDate">Start Date</label>
                     </div>
                     <div class="col-md-8">
-                        @Html.ValueFor(x => x.Id)
+                        @Html.ValueFor(x => x.StartDate)
                     </div>
                 </div>
                 <div class="row row-spacer">
                     <div class="col-md-4">
-                        <label for="Chairs">Chairs</label>
+                        <label for="EndDate">End Date</label>
                     </div>
                     <div class="col-md-8">
-                        @Html.ValueFor(x => x.Chairs)
+                        @Html.ValueFor(x => x.EndDate)
                     </div>
                 </div>
                 <div class="row row-spacer">
                     <div class="col-md-4">
-                        <label for="Location">Location</label>
+                        <label for="Reason">Reason</label>
                     </div>
                     <div class="col-md-8">
-                        @Html.ValueFor(x => x.Location)
+                        @Html.ValueFor(x => x.Reason)
                     </div>
                 </div>
-                    <div class="col-md-8 offset-md-4 row-spacer">
-                        <button type="submit" class="btn btn-primary">Delete</button>
-                    </div>
+                <div class="col-md-8 offset-md-4 row-spacer">
+                    <button type="submit" class="btn btn-primary">Delete</button>
                 </div>
+            </div>
         </form>
     </div>
 </div>
