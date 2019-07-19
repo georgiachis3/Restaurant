@@ -11,8 +11,10 @@ using static Web.Data.BookingService;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class HolidayController : Controller
     {
+
         private Dictionary<HolidayBookingStatus, string> HolidayErrorMessageLookup = new Dictionary<HolidayBookingStatus, string>()
         {
             {HolidayBookingStatus.BeforeStart, "Your holiday cannot end before it starts." },
@@ -53,7 +55,6 @@ namespace Web.Controllers
             return View(holidayService.GetAll());
         }
 
-        [Authorize]
         public IActionResult Holidays()
         {
             var viewModel = new BookingConflictViewModel();
@@ -62,7 +63,6 @@ namespace Web.Controllers
             return View(viewModel);
         }
 
-        [Authorize]
         [HttpPost]
         public IActionResult Holidays(BookingConflictViewModel viewModel, bool confirmDelete = false)
         {
@@ -108,13 +108,6 @@ namespace Web.Controllers
             return View(viewModel);
 
 
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

@@ -14,19 +14,21 @@
                 <th>Last Name</th>
                 <th>Phone Number</th>
 				<th>Email Address</th>
+                <th>Details</th>
             </tr>
         </thead>
         <tbody>
     @foreach (var booking in Model){
-        <tr>
-            <td> @booking.Time</td>
-            <td> @booking.Guests</td>
-            <td> @booking.RequestedLocation</td>
-            <td> @booking.FirstName</td>
-            <td> @booking.LastName</td>
-            <td> @booking.PhoneNumber</td>
-			<td> @booking.EmailAddress</td>
-        </tr>
+            <tr>
+                <td> @booking.Time</td>
+                <td> @booking.Guests</td>
+                <td> @booking.RequestedLocation</td>
+                <td> @booking.FirstName</td>
+                <td> @booking.LastName</td>
+                <td> @booking.PhoneNumber</td>
+                <td> @booking.EmailAddress</td>
+                <td>@Html.ActionLink("Details", "ViewBooking", "Booking", new { id = booking.Id })</td>
+            </tr>
       
 
     }

@@ -10,6 +10,7 @@ using static Web.Data.BookingService;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class TableController : Controller
     {
 
@@ -55,8 +56,7 @@ namespace Web.Controllers
             tableService.Add(table);
             return View(table);
         }
-
-        [Authorize]
+       
         [HttpGet]
         public IActionResult ListofTables()
         {

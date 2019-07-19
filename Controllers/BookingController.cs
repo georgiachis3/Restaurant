@@ -10,6 +10,7 @@ using static Web.Data.BookingService;
 
 namespace Web.Controllers
 {
+    
     public class BookingController : Controller
     {
         
@@ -41,11 +42,28 @@ namespace Web.Controllers
         }
         [Authorize]
         [HttpGet]
+        public IActionResult ViewBooking(int Id)
+        {
+            var deleteBooking = bookingService.Get(Id);
+            if (deleteBooking == null)
+            {
+                return NotFound();
+            }
+            return View(deleteBooking);
+        }
+        [Authorize]
+        [HttpPost]
+        public IActionResult DeleteBooking(int Id)
+        {
+            bookingService.Delete(Id);
+            return RedirectToAction("Admin");
+        }
+        [Authorize]
+        [HttpGet]
         public IActionResult Admin()
         {
             return View(bookingService.GetAll());
         }
-       
         [HttpPost]
         public IActionResult Booking(Booking booking, DateTime date, DateTime time)
         {

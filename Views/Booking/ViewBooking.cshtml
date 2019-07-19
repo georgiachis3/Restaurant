@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Bookings";
+}
+
+@model Booking
+
+<div class="text-center">
+    <h1>@ViewData["Title"]</h1>
+    <p>Managing and deleting bookings</p>
+</div>
+
+<div class ="row">
+    <div class="col-md-6 order-md-2">
+        @Html.ValidationSummary()
+    
+        <form method="POST" class="reservation" action="@Url.Action("DeleteBooking", "Booking")">
+            @Html.HiddenFor(x => x.Id)
+            <div class="col-12">
+              
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="Time">Time</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.ValueFor(x => x.Time)
+                    </div>
+                </div>
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="Guests">Guests</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.ValueFor(x => x.Guests)
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="Location">Location</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.ValueFor(x => x.RequestedLocation)
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="FirstName">First Name</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.ValueFor(x => x.FirstName)
+                    </div>
+                </div>
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="LastName">Last Name</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.ValueFor(x => x.LastName)
+                    </div>
+                </div>
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        <label for="PhoneNumber">Phone Number</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.ValueFor(x => x.PhoneNumber)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 row-spacer">
+                        <label for="EmailAddress">Email Address (mailing list)</label>
+                    </div>
+                    <div class="col-md-8 row-spacer">
+                        @Html.ValueFor(x => x.EmailAddress)
+                    </div>
+                </div>
+                <div class="col-md-8 offset-md-4 row-spacer">
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>   
+</div>
+
+
