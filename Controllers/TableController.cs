@@ -11,37 +11,12 @@ using static Web.Data.BookingService;
 namespace Web.Controllers
 {
     [Authorize]
-    public class TableController : Controller
-    {
-
-  
+    public class TableController : BaseController<Table>
+    {  
         TableService tableService;
 
-        public TableController(BookingContext context)
+        public TableController(BookingContext context) : base(new GenericService<Table>(context))
         {
-            
-            tableService = new TableService(context);
-
-        }
-        [HttpGet]
-
-
-       
-        [HttpGet]
-        public IActionResult ViewTable(int Id)
-        {
-            var table = tableService.Get(Id);
-            if (table == null)
-            {
-                return NotFound();
-            }
-            return View(table);
-        }
-        [HttpPost]
-        public IActionResult DeleteTable(int Id)
-        {
-            tableService.Delete(Id);
-            return RedirectToAction("ListofTables");
         }
 
         [HttpGet]
@@ -57,10 +32,6 @@ namespace Web.Controllers
             return View(table);
         }
        
-        [HttpGet]
-        public IActionResult ListofTables()
-        {
-            return View(tableService.GetAll());
-        }
+       
     }
 }

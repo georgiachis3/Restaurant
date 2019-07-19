@@ -10,28 +10,41 @@ using static Web.Data.BookingService;
 
 namespace Web.Controllers
 {
-    public class HomeController : Controller
+    public class BaseController<T> : Controller where T : Identifiable
     {
-        
-        [HttpGet]
-        public IActionResult Index()
+        GenericService<T> service;
+
+        public BaseController(GenericService<T> service)
         {
-            return View();
+            this.service = service;
         }
 
+        [Authorize]
         [HttpGet]
-        public IActionResult Menu()
+        public IActionResult View(int Id)
         {
-            return View();
+            var deleteBooking = service.Get(Id);
+            if (deleteBooking == null)
+            {
+                return NotFound();
+            }
+            return View(deleteBooking);
         }
 
-       
-        [HttpGet]
-        public IActionResult FAQs()
+        [Authorize]
+        [HttpPost]
+        public IActionResult Delete(int Id)
         {
-            return View();
+            service.Delete(Id);
+            return RedirectToAction("Admin");
         }
-       
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult List()
+        {
+            return View(service.GetAll());
+        }
     }
 }
         

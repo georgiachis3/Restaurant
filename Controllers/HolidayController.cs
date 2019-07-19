@@ -12,7 +12,7 @@ using static Web.Data.BookingService;
 namespace Web.Controllers
 {
     [Authorize]
-    public class HolidayController : Controller
+    public class HolidayController : BaseController<Holidays>
     {
 
         private Dictionary<HolidayBookingStatus, string> HolidayErrorMessageLookup = new Dictionary<HolidayBookingStatus, string>()
@@ -26,34 +26,11 @@ namespace Web.Controllers
         HolidayService holidayService;
 
 
-        public HolidayController(BookingContext context)
+        public HolidayController(BookingContext context) : base(new GenericService<Holidays>(context))
         {
-
-            bookingService = new BookingService(context);
-            holidayService = new HolidayService(context);
-
         }
         [HttpGet]
-        public IActionResult ViewHoliday(int Id)
-        {
-            var holiday = holidayService.Get(Id);
-            if (holiday == null)
-            {
-                return NotFound();
-            }
-            return View(holiday);
-        }
-        [HttpPost]
-        public IActionResult DeleteHoliday(int Id)
-        {
-            holidayService.Delete(Id);
-            return RedirectToAction("ListofHolidays");
-        }
-
-        public IActionResult ListofHolidays()
-        {
-            return View(holidayService.GetAll());
-        }
+        
 
         public IActionResult Holidays()
         {

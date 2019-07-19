@@ -11,7 +11,7 @@ using static Web.Data.BookingService;
 namespace Web.Controllers
 {
     
-    public class BookingController : Controller
+    public class BookingController : BaseController<Booking>
     {
         
         private Dictionary<BookingStatus, string> BookingErrorMessageLookup = new Dictionary<BookingStatus, string>()
@@ -27,11 +27,10 @@ namespace Web.Controllers
         BookingService bookingService;
         HolidayService holidayService;
 
-        public BookingController(BookingContext context)
+        public BookingController(BookingContext context) : base(new GenericService<Booking>(context))
         {
-            bookingService = new BookingService(context);
-            holidayService = new HolidayService(context);
         }
+
         public IActionResult Booking()
         {
             return View();
@@ -40,30 +39,11 @@ namespace Web.Controllers
         {
             return View();
         }
-        [Authorize]
-        [HttpGet]
-        public IActionResult ViewBooking(int Id)
-        {
-            var deleteBooking = bookingService.Get(Id);
-            if (deleteBooking == null)
-            {
-                return NotFound();
-            }
-            return View(deleteBooking);
-        }
-        [Authorize]
-        [HttpPost]
-        public IActionResult DeleteBooking(int Id)
-        {
-            bookingService.Delete(Id);
-            return RedirectToAction("Admin");
-        }
-        [Authorize]
-        [HttpGet]
-        public IActionResult Admin()
-        {
-            return View(bookingService.GetAll());
-        }
+        // taken out here
+        // taken out here
+        // taken out here
+        
+        
         [HttpPost]
         public IActionResult Booking(Booking booking, DateTime date, DateTime time)
         {
